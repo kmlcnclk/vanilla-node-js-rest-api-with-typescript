@@ -4,7 +4,7 @@ import MainRoute from "./routes";
 import Response from "./utils/response";
 import LoggerMiddleware from "./middlewares/logger.middleware";
 import dotenv from "dotenv";
-import MongoDB from "./db/mongoDB";
+import MongoDB from "./db/mongo.db";
 
 const PORT = process.env.PORT || 3000;
 const mainRoute = new MainRoute();
