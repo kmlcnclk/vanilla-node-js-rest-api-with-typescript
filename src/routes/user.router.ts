@@ -18,8 +18,8 @@ class UserRouter {
 
     if (url === "/users" && method === "GET") {
       this.userController.getUsers(req, res);
-    } else if (url.match(/^\/users\/\d+$/) && method === "GET") {
-      const id = parseInt(url.split("/")[2]);
+    } else if (url.match(/^\/users\/[\w-]+$/) && method === "GET") {
+      const id = url.split("/")[2];
       this.userController.getUserById(req, res, id);
     } else if (url === "/users" && method === "POST") {
       this.userMiddleware.validateUserData(

@@ -1,9 +1,12 @@
 import { IncomingMessage } from "http";
 
 class UserHelper {
-  constructor() {}
+  constructor() {
+    this.parseBody = this.parseBody.bind(this);
+  }
 
   public async parseBody(req: IncomingMessage): Promise<any> {
+    console.log("Parsing body...");
     return new Promise((resolve, reject) => {
       let body = "";
 

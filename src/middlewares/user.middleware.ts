@@ -1,12 +1,15 @@
 import { IncomingMessage, ServerResponse } from "http";
 import UserHelper from "../helpers/user.helper";
 import Response from "../utils/response";
+import UserDto from "../dto/user.dto";
 
 class UserMiddleware {
   private userHelper: UserHelper;
 
   constructor() {
     this.userHelper = new UserHelper();
+
+    this.validateUserData = this.validateUserData.bind(this);
   }
 
   public async validateUserData(
@@ -14,15 +17,15 @@ class UserMiddleware {
     res: ServerResponse,
     next: Function
   ) {
-    const { name, email, password } = await this.userHelper.parseBody(req);
+    const userDto: UserDto = await this.userHelper.parseBody(req);
 
-    if (!name || !email || !password) {
-      Response.send(res, {
+    if (!userDto.name || !userDto.email || !userDto.password) {
+      return Response.send(res, {
         status: 400,
         data: { message: "Missing required fields" },
       });
     } else {
-      next(req, res);
+      return next(req, res, userDto);
     }
   }
 }
